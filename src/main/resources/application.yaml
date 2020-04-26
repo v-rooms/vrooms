@@ -1,3 +1,24 @@
 spring:
   application:
-    name: vrooms-web-service
+    name: vrooms
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOLE_CLIENT_ID}
+            client-secret: ${GOOLE_CLIENT_SECRET}
+  data:
+    mongodb:
+      database: vrooms
+      host: localhost
+      port: 27017
+
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: classpath:vrooms-self-signed.p12
+    key-store-type: PKCS12
+    key-store-provider: SUN
+    key-store-password: vrooms
