@@ -8,6 +8,7 @@ spring:
           google:
             client-id: ${GOOLE_CLIENT_ID}
             client-secret: ${GOOLE_CLIENT_SECRET}
+            scope: profile, email
   data:
     mongodb:
       database: vrooms
@@ -22,3 +23,22 @@ server:
     key-store-type: PKCS12
     key-store-provider: SUN
     key-store-password: vrooms
+
+openvidu:
+  url: https://localhost:4443/
+  secret: MY_SECRET
+  publicurl: local
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    oauth:
+      app-name: vrooms
+      client-id: ${GOOLE_CLIENT_ID}
+      client-secret: ${GOOLE_CLIENT_SECRET}
+
+logging:
+  level:
+    io.vrooms: info
