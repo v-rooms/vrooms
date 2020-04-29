@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  vrooms:
+    image: aukhatov/vrooms:0.0.1-SNAPSHOT
+    ports:
+      - "8443:8443"
+    networks:
+      - local_net
+    environment:
+      DB_HOST: mongo
+      OPENVIDU_URL: https://media-server:4443/
+      OPENVIDU_SECRET: MY_SECRET
+      GOOLE_CLIENT_ID:
+      GOOLE_CLIENT_SECRET:
+    depends_on:
+      - mongo
+      - media-server
+
+  mongo:
+    image: mongo:4.2.5
+    ports:
+      - "27017:27017"
+    networks:
+      - local_net
+
+  media-server:
+    image: openvidu/openvidu-server-kms:2.12.0
+    ports:
+      - "4443:4443"
+    networks:
+      - local_net
+    environment:
+      OPENVIDU_SECRET: MY_SECRET
+
+networks:
+  local_net:
+    driver: bridge
