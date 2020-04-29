@@ -8,8 +8,14 @@ VRooms RESTful web-service
 
 ## Build
 
+### JAR
 ```shell script
 $ ./mvnw package
+```
+
+### Docker
+```shell script
+$ ./mvnw verify
 ```
 
 ## Run
