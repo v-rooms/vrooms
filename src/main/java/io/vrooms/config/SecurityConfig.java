@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	public static final String API_DOCS = "/api-docs/";
+	public static final String API_DOCS = "/api-docs";
 	public static final String SWAGGER_UI = "/swagger-ui.html";
 
 	private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuthUserService;
@@ -25,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers(API_DOCS, SWAGGER_UI).permitAll()
+				.antMatchers(API_DOCS, SWAGGER_UI).anonymous()
+				.and()
+				.authorizeRequests()
 				.anyRequest().authenticated()
 				.and()
 				.oauth2Login()
