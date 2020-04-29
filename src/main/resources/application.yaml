@@ -12,8 +12,8 @@ spring:
   data:
     mongodb:
       database: vrooms
-      host: localhost
-      port: 27017
+      host: ${DB_HOST:localhost}
+      port: ${DB_PORT:27017}
 
 server:
   port: 8443
