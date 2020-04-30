@@ -34,6 +34,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
+    config-url: /api-docs
     oauth:
       app-name: vrooms
       client-id: ${GOOLE_CLIENT_ID}
