@@ -24,6 +24,11 @@ server:
     key-store-provider: SUN
     key-store-password: vrooms
 
+cors:
+  allowed:
+    origins: http://localhost:4200
+    methods: GET, POST, PUT, DELETE, OPTIONS
+
 openvidu:
   url: https://localhost:4443/
   secret: MY_SECRET
