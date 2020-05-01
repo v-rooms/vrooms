@@ -1,13 +1,15 @@
 version: '3.7'
 services:
   vrooms:
-    image: aukhatov/vrooms:0.0.2-SNAPSHOT
+    image: aukhatov/vrooms:0.0.3
     ports:
       - "8443:8443"
     networks:
       - local_net
     environment:
       DB_HOST: mongo
+      CORS_ALLOWED_ORIGINS: http://localhost:4200
+      CORS_ALLOWED_METHODS: GET, POST, PUT, DELETE, OPTIONS
       OPENVIDU_URL: https://media-server:4443/
       OPENVIDU_SECRET: MY_SECRET
       GOOLE_CLIENT_ID:

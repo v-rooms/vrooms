@@ -15,11 +15,23 @@ $ ./mvnw package
 ```
 
 ### Docker
-If you want to run the app by docker you have to build it the image before.
+If you want to run the app by the docker you have to build it the image before.
 
 ```shell script
 $ ./mvnw verify
 ```
+
+## Configure CORS
+
+### JAR
+Pass the arg `--cors.allowed.origins=http://origin.example.com`
+
+> Please, replace by your origin host and protocol.
+
+### Docker Compose
+Put the environment var `CORS_ALLOWED_ORIGINS:http://origin.example.com` in `vrooms` seervice.
+
+> Please, replace by your origin host and protocol.
 
 ## Run
 
