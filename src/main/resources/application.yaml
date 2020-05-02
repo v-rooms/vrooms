@@ -44,6 +44,7 @@ springdoc:
       app-name: vrooms
       client-id: ${GOOLE_CLIENT_ID}
       client-secret: ${GOOLE_CLIENT_SECRET}
+  packages-to-scan: io.vrooms.api, io.vrooms.model
 
 logging:
   level:
