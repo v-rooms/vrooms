@@ -17,13 +17,10 @@ import io.vrooms.model.RoomToken;
 import io.vrooms.model.User;
 import io.vrooms.repository.RoomRepository;
 import io.vrooms.repository.UserRepository;
-import io.vrooms.security.OAuthUserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,7 +85,7 @@ public class RoomController {
 			final Session session = openVidu.createSession();
 			sessionStore.putIfAbsent(room.getId(), session);
 		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			throw new RoomSessionCreateException("Couldn't create the session", e);
+			throw new RoomSessionCreateException("Couldn't create a session", e);
 		}
 
 		return room;
@@ -110,19 +107,20 @@ public class RoomController {
 				});
 	}
 
-	@GetMapping("/{roomId}/token")
-	public RoomToken generateToken(@PathVariable String roomId,
-								   @AuthenticationPrincipal OAuth2User principal)
+	@PostMapping("/{roomId}/token")
+	public RoomToken generateToken(@PathVariable String roomId)
 			throws TokenGenerateException {
 
 		if (isNull(roomId) || roomId.isEmpty()) {
 			throw new IllegalArgumentException("Incorrect input data");
 		}
 
-		User user = userRepository.findByEmail(principal.getAttribute(OAuthUserInfo.EMAIL))
+		Room room = roomRepository.findById(roomId)
 				.orElseThrow(() -> {
-					throw new UserNotFoundException("The user is not registered");
+					throw new RoomNotFoundException(format("Room %s not found", roomId));
 				});
+
+		User user = room.getOwner();
 
 		TokenOptions tokenOpts = new TokenOptions.Builder()
 				.role(OpenViduRole.PUBLISHER)

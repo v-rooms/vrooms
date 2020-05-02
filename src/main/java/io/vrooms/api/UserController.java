@@ -33,11 +33,13 @@ public class UserController {
 
 	@PostMapping
 	public User createUser(@RequestBody User user) {
+		logger.info("Create user {}", user);
 		return userRepository.save(user);
 	}
 
 	@GetMapping("/{userId}")
 	public User getUser(@PathVariable String userId) {
+		logger.info("Get user {}", userId);
 		return userRepository.findById(userId).orElseThrow(() -> {
 			throw new UserNotFoundException(format("User %s is not exist", userId));
 		});
@@ -45,6 +47,7 @@ public class UserController {
 
 	@GetMapping
 	public List<User> getAllUsers() {
+		logger.info("Get all users");
 		return userRepository.findAll();
 	}
 

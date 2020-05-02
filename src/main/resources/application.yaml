@@ -47,4 +47,5 @@ springdoc:
 
 logging:
   level:
+    org.springframework.web: debug
     io.vrooms: info

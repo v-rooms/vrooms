@@ -25,10 +25,10 @@ public class Room {
 	private String description;
 
 	@DBRef
+	@Field("owner-id")
 	private User owner;
 
-	@DBRef
-	private Preview preview;
+	private String preview;
 
 	public String getId() {
 		return id;
@@ -74,11 +74,11 @@ public class Room {
 		this.type = type;
 	}
 
-	public Preview getPreview() {
+	public String getPreview() {
 		return preview;
 	}
 
-	public void setPreview(Preview preview) {
+	public void setPreview(String preview) {
 		this.preview = preview;
 	}
 
