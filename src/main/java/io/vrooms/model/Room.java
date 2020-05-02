@@ -1,9 +1,7 @@
 package io.vrooms.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -23,9 +21,7 @@ public class Room {
 
 	private String description;
 
-	@JsonProperty("ownerId")
-	@DBRef
-	private User owner;
+	private String ownerId;
 
 	private String preview;
 
@@ -49,12 +45,12 @@ public class Room {
 		this.description = description;
 	}
 
-	public User getOwner() {
-		return owner;
+	public String getOwnerId() {
+		return ownerId;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
 	}
 
 	public LocalDate getCreateDate() {

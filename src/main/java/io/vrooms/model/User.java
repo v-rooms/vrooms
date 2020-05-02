@@ -13,6 +13,9 @@ public class User {
 	private String email;
 	private OpenViduRole role;
 
+	public User() {
+	}
+
 	public User(String name, String email) {
 		this.name = name;
 		this.email = email;

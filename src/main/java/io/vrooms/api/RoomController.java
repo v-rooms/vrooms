@@ -122,7 +122,10 @@ public class RoomController {
 					throw new RoomNotFoundException(format("Room %s not found", roomId));
 				});
 
-		User user = room.getOwner();
+		User user = userRepository.findById(room.getOwnerId())
+				.orElseThrow(() -> {
+					throw new UserNotFoundException(format("For the room %s owner doesn't exist", roomId));
+				});
 
 		TokenOptions tokenOpts = new TokenOptions.Builder()
 				.role(OpenViduRole.PUBLISHER)
