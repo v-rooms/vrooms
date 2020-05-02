@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.security.OAuthFlows;
 import io.swagger.v3.oas.annotations.security.OAuthScope;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.vrooms.model.Room;
-import io.vrooms.model.Token;
+import io.vrooms.model.RoomToken;
 import io.vrooms.model.User;
 import io.vrooms.repository.RoomRepository;
 import io.vrooms.repository.UserRepository;
@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -80,6 +81,7 @@ public class RoomController {
 
 	@PostMapping
 	public Room createRoom(@RequestBody Room newRoom) throws RoomSessionCreateException {
+		newRoom.setCreateDate(LocalDate.now());
 		Room room = roomRepository.save(newRoom);
 
 		try {
@@ -109,8 +111,8 @@ public class RoomController {
 	}
 
 	@GetMapping("/{roomId}/token")
-	public Token generateToken(@PathVariable String roomId,
-							   @AuthenticationPrincipal OAuth2User principal)
+	public RoomToken generateToken(@PathVariable String roomId,
+								   @AuthenticationPrincipal OAuth2User principal)
 			throws TokenGenerateException {
 
 		if (isNull(roomId) || roomId.isEmpty()) {
@@ -130,7 +132,7 @@ public class RoomController {
 			try {
 				final Session session = sessionStore.get(roomId);
 				session.generateToken(tokenOpts);
-				return new Token(session.generateToken(tokenOpts), user.getId(), OpenViduRole.PUBLISHER);
+				return new RoomToken(session.generateToken(tokenOpts));
 			} catch (OpenViduJavaClientException e) {
 				throw new TokenGenerateException("Couldn't generate token", e);
 			} catch (OpenViduHttpException ex) {
@@ -139,7 +141,7 @@ public class RoomController {
 					try {
 						final Session session = openVidu.createSession();
 						session.generateToken(tokenOpts);
-						return new Token(session.generateToken(tokenOpts), user.getId(), OpenViduRole.PUBLISHER);
+						return new RoomToken(session.generateToken(tokenOpts));
 					} catch (OpenViduJavaClientException | OpenViduHttpException e) {
 						throw new TokenGenerateException("Couldn't generate token");
 					}

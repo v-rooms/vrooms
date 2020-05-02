@@ -4,6 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.time.LocalDate;
 
 @Document
 public class Room {
@@ -11,15 +14,21 @@ public class Room {
 	@Id
 	private String id;
 
+	@Field("create-date")
+	private LocalDate createDate;
+
 	@Indexed(unique = true)
 	private String name;
 
-	private String link;
+	private Type type;
 
 	private String description;
 
 	@DBRef
 	private User owner;
+
+	@DBRef
+	private Preview preview;
 
 	public String getId() {
 		return id;
@@ -31,14 +40,6 @@ public class Room {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLink() {
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
 	}
 
 	public String getDescription() {
@@ -55,5 +56,33 @@ public class Room {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	public LocalDate getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDate createDate) {
+		this.createDate = createDate;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public Preview getPreview() {
+		return preview;
+	}
+
+	public void setPreview(Preview preview) {
+		this.preview = preview;
+	}
+
+	public enum Type {
+		PUBLIC, PRIVATE
 	}
 }
