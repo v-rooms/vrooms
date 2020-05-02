@@ -1,5 +1,6 @@
 package io.vrooms.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -24,8 +25,8 @@ public class Room {
 
 	private String description;
 
+	@JsonProperty("owner-id")
 	@DBRef
-	@Field("owner-id")
 	private User owner;
 
 	private String preview;
