@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +42,7 @@ import static java.util.Objects.nonNull;
 		name = "OAuth2",
 		type = SecuritySchemeType.OAUTH2,
 		in = SecuritySchemeIn.HEADER,
-		bearerFormat = "jwt",
+		bearerFormat = "JWT",
 		flows = @OAuthFlows(
 				implicit = @OAuthFlow(
 						authorizationUrl = "https://accounts.google.com/o/oauth2/v2/auth",
@@ -53,8 +53,8 @@ import static java.util.Objects.nonNull;
 				)
 		)
 )
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/api/v1/rooms")
 public class RoomController {
 
@@ -93,6 +93,7 @@ public class RoomController {
 		return room;
 	}
 
+	@PreAuthorize("permitAll()")
 	@GetMapping
 	public List<Room> getRooms() {
 		return roomRepository.findAll();

@@ -7,24 +7,34 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 public class CorsConfig {
 
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource(
-			@Value("#{'${cors.allowed.origins}'.split(',')}") List<String> allowedOrigins,
-			@Value("#{'${cors.allowed.methods}'.split(',')}") List<String> allowedMethods) {
+	@Value("#{'${cors.allowed.origins}'.split(',')}")
+	private List<String> allowedOrigins;
 
+	@Value("#{'${cors.allowed.methods}'.split(',')}")
+	private List<String> allowedMethods;
+
+	@Value("#{'${cors.allowed.headers}'.split(',')}")
+	private List<String> allowedHeaders;
+
+	@Value("#{'${cors.exposed.headers}'.split(',')}")
+	private List<String> exposedHeaders;
+
+	@Bean
+	public CorsConfigurationSource urlBasedCorsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedOrigins(allowedOrigins);
 		config.setAllowedMethods(allowedMethods);
-		config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin"));
+		config.setAllowedHeaders(allowedHeaders);
+		config.setExposedHeaders(exposedHeaders);
 		config.setAllowCredentials(true);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
 		source.registerCorsConfiguration("/**", config);
 		return source;
 	}
