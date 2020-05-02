@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.vrooms</groupId>
     <artifactId>vrooms</artifactId>
-    <version>0.0.5-INSECURE</version>
+    <version>0.0.6-INSECURE</version>
     <name>vrooms</name>
     <description>VRooms</description>
 
