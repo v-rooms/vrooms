@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 
@@ -15,7 +14,6 @@ public class Room {
 	@Id
 	private String id;
 
-	@Field("create-date")
 	private LocalDate createDate;
 
 	@Indexed(unique = true)
@@ -25,7 +23,7 @@ public class Room {
 
 	private String description;
 
-	@JsonProperty("owner-id")
+	@JsonProperty("ownerId")
 	@DBRef
 	private User owner;
 
