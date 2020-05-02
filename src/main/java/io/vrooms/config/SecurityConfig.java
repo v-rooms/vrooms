@@ -22,6 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String API_DOCS = "/api-docs/**";
 	public static final String SWAGGER_UI = "/swagger-ui.html";
 	public static final String SWAGGER_UI_RESOURCES = "/swagger-ui/**";
+	public static final String ROOT_URI = "/";
+	public static final String ERROR_URI = "/error";
+	public static final String LOGIN_URI = "/login/**";
+	public static final String OAUTH2_LOGIN_URI = "/oauth2/**";
 
 	private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuthUserService;
 
@@ -35,9 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors()
 				.and()
 				.authorizeRequests()
-				.antMatchers(API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES).permitAll()
-				.and()
-				.authorizeRequests()
+				.antMatchers(ROOT_URI, ERROR_URI, LOGIN_URI, OAUTH2_LOGIN_URI,
+						API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES).permitAll();
+	}
+
+	private void oauth2(HttpSecurity http) throws Exception {
+		http.authorizeRequests()
 				.anyRequest().authenticated()
 				.and()
 				.oauth2Login()
