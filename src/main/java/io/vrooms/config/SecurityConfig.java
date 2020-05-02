@@ -1,6 +1,6 @@
 package io.vrooms.config;
 
-import io.vrooms.security.OAuthUserService;
+import io.vrooms.oauth.OAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

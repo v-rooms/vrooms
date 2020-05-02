@@ -2,6 +2,7 @@ package io.vrooms.api;
 
 import io.vrooms.model.User;
 import io.vrooms.repository.UserRepository;
+import io.vrooms.service.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

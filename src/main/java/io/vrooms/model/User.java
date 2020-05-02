@@ -1,16 +1,24 @@
 package io.vrooms.model;
 
 import io.openvidu.java.client.OpenViduRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class User {
 
+	@Schema(hidden = true)
 	@Id
 	private String id;
+
+	@Schema(description = "Name of the user", required = true)
 	private String name;
+
 	private String email;
+
+	@Schema(description = "Role of the user",
+			example = "PUBLISHER", enumAsRef = true)
 	private OpenViduRole role;
 
 	public User() {

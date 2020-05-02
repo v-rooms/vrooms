@@ -1,4 +1,4 @@
-package io.vrooms.security;
+package io.vrooms.oauth;
 
 import io.vrooms.model.User;
 import io.vrooms.repository.UserRepository;

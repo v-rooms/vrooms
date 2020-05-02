@@ -1,5 +1,9 @@
 package io.vrooms.api;
 
+import io.vrooms.service.RoomNotFoundException;
+import io.vrooms.service.RoomSessionCreateException;
+import io.vrooms.service.TokenGenerateException;
+import io.vrooms.service.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -43,6 +47,13 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(TokenGenerateException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ErrorMessage tokenGenerateException(TokenGenerateException ex) {
+		logger.error(ex.getMessage(), ex);
+		return new ErrorMessage(ex.getMessage());
+	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorMessage incorrectInputData(IllegalArgumentException ex) {
 		logger.error(ex.getMessage(), ex);
 		return new ErrorMessage(ex.getMessage());
 	}

@@ -1,5 +1,6 @@
 package io.vrooms.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,20 +10,32 @@ import java.time.LocalDate;
 @Document
 public class Room {
 
+	@Schema(hidden = true)
 	@Id
 	private String id;
 
+	@Schema(hidden = true)
 	private LocalDate createDate;
 
+	@Schema(description = "Name of the room",
+			example = "Architecture committee", required = true)
 	@Indexed(unique = true)
 	private String name;
 
+	@Schema(description = "Type of the room",
+			example = "PUBLIC", enumAsRef = true)
 	private Type type;
 
+	@Schema(description = "Description of the room",
+			example = "This is fantastic room ever!!!")
 	private String description;
 
+	@Schema(description = "The room owner reference",
+			example = "ta123sd542lj2131b")
 	private String ownerId;
 
+	@Schema(description = "Link to preview image",
+			example = "http://preview.com/u3a6ssvn")
 	private String preview;
 
 	public String getId() {

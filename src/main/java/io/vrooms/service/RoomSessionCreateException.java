@@ -1,4 +1,4 @@
-package io.vrooms.api;
+package io.vrooms.service;
 
 public class RoomSessionCreateException extends Exception {
 
