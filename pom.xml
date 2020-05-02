@@ -104,6 +104,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <arguments>
+                        <compilerArgs>
+                            <arg>--enable-preview</arg>
+                        </compilerArgs>
+                    </arguments>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
