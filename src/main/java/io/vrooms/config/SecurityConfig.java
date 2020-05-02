@@ -3,6 +3,7 @@ package io.vrooms.config;
 import io.vrooms.security.OAuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,24 +23,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String ERROR_URI = "/error";
 	public static final String LOGIN_URI = "/login/**";
 	public static final String OAUTH2_LOGIN_URI = "/oauth2/**";
+	public static final String ANY_URI = "/**";
 
 	private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuthUserService;
-	private final CorsConfigurationSource corsConfigurationSource;
+	private final CorsConfigurationSource corsConfigSource;
 
 	@Autowired
 	public SecurityConfig(OAuthUserService oAuthUserService,
-						  CorsConfigurationSource corsConfigurationSource) {
+						  CorsConfigurationSource urlBasedCorsConfigurationSource) {
 
 		this.oAuthUserService = oAuthUserService;
-		this.corsConfigurationSource = corsConfigurationSource;
+		this.corsConfigSource = urlBasedCorsConfigurationSource;
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().configurationSource(corsConfigurationSource)
+		http.csrf().disable()
+				.cors().configurationSource(corsConfigSource)
 				.and()
-				.csrf().disable()
 				.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, ANY_URI).permitAll()
 				.antMatchers(ROOT_URI, ERROR_URI, LOGIN_URI, OAUTH2_LOGIN_URI,
 						API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES).permitAll();
 	}
