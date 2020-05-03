@@ -1,0 +1,16 @@
+language: java
+jdk: openjdk14
+
+sudo: required
+
+services:
+  - docker
+
+before_script:
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+
+script:
+  - ./gradlew clean pushImage
+
+notifications:
+  email: false
