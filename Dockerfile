@@ -4,4 +4,4 @@ ENTRYPOINT ["java", "-jar", "/opt/vrooms.jar", "-Xmx256m"]
 EXPOSE 8443
 
 ARG JAR_FILE
-ADD target/${JAR_FILE} /opt/vrooms.jar
+COPY ${JAR_FILE} /opt/vrooms.jar
