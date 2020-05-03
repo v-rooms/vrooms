@@ -16,12 +16,15 @@ import io.vrooms.service.RoomSessionCreateException;
 import io.vrooms.service.TokenGenerateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -68,11 +71,26 @@ public class RoomController {
 		return roomServiceFacade.createRoomAndSession(room);
 	}
 
+	@Operation(summary = "Update a room")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Room successfully updated"),
+			@ApiResponse(responseCode = "500", description = "Internal error during create a room")})
+	@PutMapping
+	@ResponseStatus(HttpStatus.OK)
+	public Room updateRoom(@RequestBody Room room, @PathVariable String roomId) {
+		if (roomId == null || roomId.isEmpty()) {
+			throw new IllegalArgumentException("");
+		}
+		return roomServiceFacade.updateRoom(room);
+	}
+
 	@Operation(summary = "Getting all rooms")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Rooms returned"),
 			@ApiResponse(responseCode = "500", description = "Internal error during fetch rooms")})
 	@PreAuthorize("permitAll()")
+	@MessageMapping("/rooms")
+	@SendTo("/topic/rooms")
 	@GetMapping
 	public List<Room> getRooms() {
 		return roomServiceFacade.getRooms();

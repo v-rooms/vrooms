@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.vrooms</groupId>
     <artifactId>vrooms</artifactId>
-    <version>0.0.9-INSECURE</version>
+    <version>0.0.9-ws</version>
     <name>vrooms</name>
     <description>VRooms</description>
 
@@ -58,6 +58,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-messaging</artifactId>
         </dependency>
         <dependency>
             <groupId>io.openvidu</groupId>

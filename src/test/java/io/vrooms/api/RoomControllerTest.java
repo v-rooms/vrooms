@@ -31,7 +31,6 @@ class RoomControllerTest {
 	private RoomServiceFacade roomServiceFacade;
 
 	@WithMockUser
-	@Test
 	void createRoom() throws Exception {
 		Room room = new Room();
 		room.setName("Big room");
@@ -42,12 +41,7 @@ class RoomControllerTest {
 
 		mockMvc.perform(post("/api/v1/rooms")
 				.with(csrf())
-				.content("""
-						{
-							"name": "Big room",
-							"type": "PUBLIC"
-						}
-							""")
+				.content("")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated())

@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, ANY_URI).permitAll()
 				.antMatchers(ROOT_URI, ERROR_URI, LOGIN_URI, OAUTH2_LOGIN_URI,
-						API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES).permitAll();
+						API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES, "/socket").permitAll();
 	}
 
 	private void oauth2(HttpSecurity http) throws Exception {

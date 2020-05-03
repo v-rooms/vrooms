@@ -51,4 +51,8 @@ public class RoomServiceFacade {
 
 		return roomSessionService.generateTokenByRoomId(roomId, user);
 	}
+
+	public Room updateRoom(Room room) {
+		return roomService.updateRoom(room);
+	}
 }
