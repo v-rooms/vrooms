@@ -94,3 +94,7 @@ task pushImageWithBuildNumber(type: DockerPushImage) {
     dependsOn   buildImage
     images.add("aukhatov/vrooms:${project.version}-b" + System.getenv('TRAVIS_BUILD_NUMBER'))
 }
+
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
+}
