@@ -1,5 +1,7 @@
 package io.vrooms.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
@@ -15,10 +17,17 @@ public class WebSocketConfig
 
 	public static final String TOPIC_ROOMS = "/topic/rooms";
 
+	private final String allowedOrigins;
+
+	@Autowired
+	public WebSocketConfig(@Value("${cors.allowed.origins}") String allowedOrigins) {
+		this.allowedOrigins = allowedOrigins;
+	}
+
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/socket")
-				.setAllowedOrigins("*")
+				.setAllowedOrigins(allowedOrigins)
 				.withSockJS();
 	}
 
