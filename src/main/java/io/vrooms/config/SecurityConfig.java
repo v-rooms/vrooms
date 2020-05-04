@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public static final String LOGIN_URI = "/login/**";
 	public static final String OAUTH2_LOGIN_URI = "/oauth2/**";
 	public static final String ANY_URI = "/**";
+	public static final String SOCKET_URI = "/socket";
 
 	private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuthUserService;
 	private final CorsConfigurationSource corsConfigSource;
@@ -44,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, ANY_URI).permitAll()
 				.antMatchers(ROOT_URI, ERROR_URI, LOGIN_URI, OAUTH2_LOGIN_URI,
-						API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES, "/socket").permitAll();
+						API_DOCS, SWAGGER_UI, SWAGGER_UI_RESOURCES, SOCKET_URI).permitAll();
 	}
 
 	private void oauth2(HttpSecurity http) throws Exception {
