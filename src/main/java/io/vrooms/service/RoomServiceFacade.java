@@ -52,9 +52,7 @@ public class RoomServiceFacade {
 	public RoomToken generateToken(String roomId, OAuth2User oauth2User) throws TokenGenerateException {
 
 		User user = userRepository.findByEmail(oauth2User.getAttribute(OAuthUserInfo.EMAIL))
-				.orElseThrow(() -> {
-					throw new UserNotFoundException("User not found");
-				});
+				.orElseThrow(() -> new UserNotFoundException("User not found"));
 
 		return roomSessionService.generateTokenByRoomId(roomId, user);
 	}

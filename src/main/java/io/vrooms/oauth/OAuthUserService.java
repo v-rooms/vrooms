@@ -38,9 +38,9 @@ public class OAuthUserService extends DefaultOAuth2UserService {
 				User user = new User(userInfo.getName(), userInfo.getEmail());
 				userRepository.save(user);
 				logger.info("New {} added", user);
-			} else {
-				logger.info("{} has been authenticated successfully", userOptional.get());
 			}
+
+			logger.info("{} has been authenticated successfully", userOptional.get());
 			return oauth2User;
 		} catch (Exception ex) {
 			throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());

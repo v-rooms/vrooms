@@ -40,9 +40,7 @@ public class RoomService {
 	public Room getRoomById(String roomId) {
 		logger.info("Get room by id");
 		return roomRepository.findById(roomId)
-				.orElseThrow(() -> {
-					throw new RoomNotFoundException(format("Room %s not exist", roomId));
-				});
+				.orElseThrow(() -> new RoomNotFoundException(format("Room %s not exist", roomId)));
 	}
 
 	public Room updateRoom(Room room) {

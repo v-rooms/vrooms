@@ -41,9 +41,8 @@ public class UserController {
 	@GetMapping("/{userId}")
 	public User getUser(@PathVariable String userId) {
 		logger.info("Get user {}", userId);
-		return userRepository.findById(userId).orElseThrow(() -> {
-			throw new UserNotFoundException(format("User %s is not exist", userId));
-		});
+		return userRepository.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException(format("User %s is not exist", userId)));
 	}
 
 	@GetMapping
