@@ -56,4 +56,8 @@ public class RoomService {
 		logger.info("Getting all rooms");
 		return roomRepository.findAll();
 	}
+
+	public void deleteRoom(String roomId) {
+		roomRepository.deleteById(roomId);
+	}
 }

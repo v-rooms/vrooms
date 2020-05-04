@@ -1,5 +1,7 @@
 package io.vrooms.service;
 
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 import io.vrooms.model.Room;
 import io.vrooms.model.RoomToken;
 import io.vrooms.model.User;
@@ -30,8 +32,13 @@ public class RoomServiceFacade {
 
 	public Room createRoomAndSession(Room room) throws RoomSessionCreateException {
 		room = roomService.createRoom(room);
-		roomSessionService.createSessionByRoomId(room.getId());
-		return room;
+		try {
+			roomSessionService.createSessionByRoomId(room.getId());
+			return room;
+		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			roomService.deleteRoom(room.getId());
+			throw new RoomSessionCreateException("Couldn't create a session", e);
+		}
 	}
 
 	public List<Room> getRooms() {

@@ -34,13 +34,9 @@ public class RoomSessionService {
 		this.openVidu = openVidu;
 	}
 
-	public void createSessionByRoomId(String roomId) throws RoomSessionCreateException {
-		try {
-			final Session session = openVidu.createSession();
-			sessionStore.putIfAbsent(roomId, session);
-		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
-			throw new RoomSessionCreateException("Couldn't create a session", e);
-		}
+	public void createSessionByRoomId(String roomId) throws OpenViduJavaClientException, OpenViduHttpException {
+		final Session session = openVidu.createSession();
+		sessionStore.putIfAbsent(roomId, session);
 	}
 
 	public RoomToken generateTokenByRoomId(String roomId, User user) throws TokenGenerateException {
