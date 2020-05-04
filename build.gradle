@@ -70,18 +70,18 @@ task copyDockerfile(type: Copy) {
 
 task buildImage(type: DockerBuildImage) {
     dependsOn   copyDockerfile
-    inputDir = project.file("${project.buildDir}/docker")
-    dockerFile = project.file("${project.buildDir}/docker/Dockerfile")
+    inputDir.dir("${project.buildDir}/docker")
+    dockerFile.fileValue(project.file("${project.buildDir}/docker/Dockerfile"))
     files project.file("${project.buildDir}/docker")
-    buildArgs = ['JAR_FILE' : "${jar.archiveBaseName.get()}-${project.version}.jar"]
+    buildArgs.put('JAR_FILE', "${jar.archiveBaseName.get()}-${project.version}.jar")
     images.add("aukhatov/vrooms:${project.version}")
 }
 
 docker {
     registryCredentials {
-        url = 'https://index.docker.io/v1/'
-        username = System.getenv('DOCKER_USER')
-        password = System.getenv('DOCKER_PASSWORD')
+        url.set('https://index.docker.io/v1/')
+        username.set(System.getenv('DOCKER_USER'))
+        password.set(System.getenv('DOCKER_PASSWORD'))
     }
 }
 
