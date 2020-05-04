@@ -78,8 +78,8 @@ public class RoomController {
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
 	public Room updateRoom(@RequestBody Room room, @PathVariable String roomId) {
-		if (roomId == null || roomId.isEmpty()) {
-			throw new IllegalArgumentException("");
+		if (roomId == null || roomId.isEmpty() || isNull(room)) {
+			throw new IllegalArgumentException("Missing required parameters");
 		}
 		return roomServiceFacade.updateRoom(room);
 	}
